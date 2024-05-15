@@ -1,0 +1,302 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    tools:context="eu.halyid.drone.activity.MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="220dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="220dp">
+
+            <eu.halyid.drone.util.VideoFeedView
+                android:id="@+id/primary_video_feed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+
+            <View
+                android:id="@+id/primary_cover_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorBlack"
+                android:visibility="gone" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:weightSum="2" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="2"
+                android:weightSum="2" >
+
+                <Button
+                    android:id="@+id/select"
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:layout_weight="1"
+                    android:text="Select Mission"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/media"
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:layout_weight="1"
+                    android:text="Manage Images"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:weightSum="5" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="5"
+                android:weightSum="5" >
+
+                <Button
+                    android:id="@+id/start"
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="Start"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/pause"
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="Pause"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/resume"
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="Resume"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/stop"
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="Stop"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/rth"
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:layout_weight="1"
+                    android:enabled="true"
+                    android:text="RTH"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/status_log"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="########" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="RTK"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/rtk_log"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="########" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Drone altitude"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/height_log"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="###" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Batteries level"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/battery_1_log"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="###" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" - "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/battery_2_log"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="###" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Current waypoint"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/waypoint_log"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="###" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Taken pictures"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/pictures_log"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="###" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Mission duration"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/duration_log"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="###" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

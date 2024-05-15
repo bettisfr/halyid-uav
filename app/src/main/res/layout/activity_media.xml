@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Media drone camera"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ListView
+            android:id="@+id/list_camera"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:weightSum="2" >
+
+            <Button
+                android:id="@+id/download_files"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_weight="1"
+                android:text="Download" />
+
+            <Button
+                android:id="@+id/delete_drone_files"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_weight="1"
+                android:text="Delete drone" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Media local storage"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ListView
+            android:id="@+id/list_local"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="1"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/input_ip"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:text="192.168.1.147"
+            android:inputType="text" />
+
+        <Spinner
+            android:id="@+id/spinner_data_set"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content" />
+
+    </GridLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:weightSum="3" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="3"
+            android:weightSum="3" >
+
+            <Button
+                android:id="@+id/detect_files"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_weight="1"
+                android:text="Detect" />
+
+            <Button
+                android:id="@+id/upload_files"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_weight="1"
+                android:text="Upload" />
+
+            <Button
+                android:id="@+id/delete_local_files"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_weight="1"
+                android:text="Delete local" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Media cloud"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ListView
+            android:id="@+id/list_cloud"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/media_log"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="########" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+</ScrollView>

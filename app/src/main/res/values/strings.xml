@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Haly.ID dev</string>
+    <string name="version">version 20240513</string>
+    <!--    <string name="title_activity_demo">GSDemoActivity</string>-->
+    <string name="disconnected">Disconnected</string>
+    <string name="product_information">Product Information</string>
+    <string name="connection_loose">Status: No Product Connected</string>
+    <string name="sdk_version">DJI SDK Version: %1$s</string>
+
+    <!--    Default parameters -->
+    <string name="mission_name">test</string>
+    <string name="altitude">10.5</string>
+    <string name="speed">3</string>
+
+    <string name="ground_distance">4</string>
+
+
+    <!--    Note used -->
+    <string name="wp_distance">3</string>
+    <string name="yaw">-90,90</string>
+    <string name="pitch">-49,-54,-58</string>
+    <string name="zoom">11.7,13.1,14.4</string>
+    <string name="wait_time">1</string>
+
+
+</resources>
