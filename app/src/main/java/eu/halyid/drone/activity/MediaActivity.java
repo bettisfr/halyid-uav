@@ -104,9 +104,9 @@ public class MediaActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
 
          client = new OkHttpClient.Builder()
-                 .connectTimeout(30, TimeUnit.SECONDS)
-                 .writeTimeout(30, TimeUnit.SECONDS)
-                 .readTimeout(30, TimeUnit.SECONDS)
+                 .connectTimeout(300, TimeUnit.SECONDS)
+                 .writeTimeout(300, TimeUnit.SECONDS)
+                 .readTimeout(300, TimeUnit.SECONDS)
                  .build();
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -158,9 +158,9 @@ public class MediaActivity extends AppCompatActivity implements View.OnClickList
 
     private void loadSpinner() {
         ArrayList<String> datasetList = new ArrayList<>();
-        datasetList.add("M-2023");
-        datasetList.add("L-2023");
-        datasetList.add("XL-2023");
+        datasetList.add("aerial/model-m.pt");
+        datasetList.add("aerial/model-l.pt");
+        datasetList.add("aerial/model-xl.pt");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, datasetList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -273,7 +273,7 @@ public class MediaActivity extends AppCompatActivity implements View.OnClickList
 
             String selectedDataset = spinnerDataSet.getSelectedItem().toString();
 
-            String url = "http://" + input_ip.getText().toString() + ":5000" + "/android/" + selectedDataset;
+            String url = "http://" + input_ip.getText().toString() + ":4555" + "/android/" + selectedDataset;
 
             Request request = new Request.Builder()
                     .url(url)

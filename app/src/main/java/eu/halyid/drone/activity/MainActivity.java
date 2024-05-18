@@ -371,7 +371,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void connectToRTK() {
-        configRTK(true);
+        boolean simulator = true;
+        configRTK(!simulator);
     }
 
     private void connectToCloud() {
