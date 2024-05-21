@@ -320,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initMapView() {
-        gMap.moveCamera(CameraUpdateFactory.zoomTo(22));
+        gMap.moveCamera(CameraUpdateFactory.zoomTo(18));
         gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
         updateDroneLocation();
@@ -371,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void connectToRTK() {
-        boolean simulator = true;
+        boolean simulator = false;
         configRTK(!simulator);
     }
 

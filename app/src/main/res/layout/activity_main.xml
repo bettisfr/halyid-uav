@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="550dp"
         android:layout_margin="5dp"
         android:orientation="vertical">
 
@@ -25,7 +25,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="220dp">
+            android:layout_height="320dp">
 
             <eu.halyid.drone.util.VideoFeedView
                 android:id="@+id/primary_video_feed"

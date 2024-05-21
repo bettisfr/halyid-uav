@@ -87,6 +87,12 @@ public class MediaActivity extends AppCompatActivity implements View.OnClickList
     private Button buttonDetect;
     private Button buttonDeleteLocal;
     private TextView textviewLogMedia;
+    private TextView textviewDetectedMedia;
+    private TextView textviewLowConfidenceMedia;
+    private TextView textviewMedConfidenceMedia;
+    private TextView textviewHighConfidenceMedia;
+    private TextView textviewSmallBoxesMedia;
+    private TextView textviewLargeBoxesMedia;
     private Spinner spinnerDataSet;
     private MediaManager mediaManager;
     private OwnCloudClient mClient;
@@ -98,6 +104,11 @@ public class MediaActivity extends AppCompatActivity implements View.OnClickList
     List<String> cloudFiles;
     int totalFiles = 0;
     int totalBugDetected = 0;
+    int lowConfidence = 0;
+    int mediumConfidence = 0;
+    int highConfidence = 0;
+    int smallBoxes = 0;
+    int largeBoxes = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -141,6 +152,12 @@ public class MediaActivity extends AppCompatActivity implements View.OnClickList
         buttonDetect = findViewById(R.id.detect_files);
 
         textviewLogMedia = findViewById(R.id.media_log);
+        textviewDetectedMedia = findViewById(R.id.media_detected);
+        textviewLowConfidenceMedia = findViewById(R.id.media_confidence_low);
+        textviewMedConfidenceMedia = findViewById(R.id.media_confidence_medium);
+        textviewHighConfidenceMedia = findViewById(R.id.media_confidence_high);
+        textviewSmallBoxesMedia = findViewById(R.id.media_boxes_small);
+        textviewLargeBoxesMedia = findViewById(R.id.media_boxes_large);
 
         buttonDownload.setOnClickListener(this);
         buttonDeleteDrone.setOnClickListener(this);
@@ -291,12 +308,28 @@ public class MediaActivity extends AppCompatActivity implements View.OnClickList
                             totalBugDetected++;
 
                             // access the elements of the individual JSONObjects
-//                            float x_min = Float.parseFloat(jsonObject.getString("xmin"));
-//                            float y_min = Float.parseFloat(jsonObject.getString("ymin"));
-//                            float x_max = Float.parseFloat(jsonObject.getString("xmax"));
-//                            float y_max = Float.parseFloat(jsonObject.getString("ymax"));
-//                            String confidence = jsonObject.getString("confidence");
+                            float x_min = Float.parseFloat(jsonObject.getString("xmin"));
+                            float y_min = Float.parseFloat(jsonObject.getString("ymin"));
+                            float x_max = Float.parseFloat(jsonObject.getString("xmax"));
+                            float y_max = Float.parseFloat(jsonObject.getString("ymax"));
+                            float confidence = Float.parseFloat(jsonObject.getString("confidence"));
 //                            String objClass = jsonObject.getString("class");
+
+                            if (confidence < 0.50) {
+                                lowConfidence++;
+                            } else if (confidence < 0.75) {
+                                mediumConfidence++;
+                            } else {
+                                highConfidence++;
+                            }
+
+                            float diff_x = x_max - x_min;
+                            float diff_y = y_max - y_min;
+                            if (diff_x <= 100 && diff_y <= 100) {
+                                smallBoxes++;
+                            } else {
+                                largeBoxes++;
+                            }
 //
 //                            String res = "(" + x_min + "," + x_max + ") ";
 //                            res += "(" + y_min + "," + y_max + ") ";
@@ -305,7 +338,14 @@ public class MediaActivity extends AppCompatActivity implements View.OnClickList
 //                            Toast.makeText(MediaActivity.this, res, Toast.LENGTH_SHORT).show();
                         }
                         totalFiles++;
-                        ToastUtils.setResultToText(textviewLogMedia, "Evaluated=" + totalFiles + "/" + files.length + " Detected=" + totalBugDetected);
+
+                        ToastUtils.setResultToText(textviewLogMedia, "File transferred=" + totalFiles);
+                        ToastUtils.setResultToText(textviewDetectedMedia, "" + totalBugDetected);
+                        ToastUtils.setResultToText(textviewLowConfidenceMedia, "" + lowConfidence);
+                        ToastUtils.setResultToText(textviewMedConfidenceMedia, "" + mediumConfidence);
+                        ToastUtils.setResultToText(textviewHighConfidenceMedia, "" + highConfidence);
+                        ToastUtils.setResultToText(textviewSmallBoxesMedia, "" + smallBoxes);
+                        ToastUtils.setResultToText(textviewLargeBoxesMedia, "" + largeBoxes);
 //                        if (jsonArray.length() == 0) {
 //                            Toast.makeText(MediaActivity.this, "Nothing found!", Toast.LENGTH_SHORT).show();
 //                        }

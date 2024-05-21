@@ -163,7 +163,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="130dp"
         android:layout_margin="5dp"
         android:orientation="vertical">
 
@@ -185,6 +185,127 @@
                 android:text="########" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="HH Detected"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/media_detected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="###" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Confidence"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  50%- (low): "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/media_confidence_low"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="###" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  50%/75% (med): "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/media_confidence_medium"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="###" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  75%+ (high): "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/media_confidence_high"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="###" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Bounding Boxes"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  100px- (small): "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/media_boxes_small"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="###" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  100px+ (large): "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/media_boxes_large"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="###" />
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
