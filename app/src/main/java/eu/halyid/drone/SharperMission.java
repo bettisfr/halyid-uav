@@ -35,7 +35,7 @@ import dji.common.mission.waypointv2.WaypointV2MissionTypes;
 import dji.common.model.LocationCoordinate2D;
 import eu.halyid.drone.util.GenericMission;
 
-public class OrchardMission extends GenericMission {
+public class SharperMission extends GenericMission {
 
     private final List<WaypointV2> waypointV2List;
     private final List<WaypointV2Action> waypointV2ActionList;
@@ -44,7 +44,7 @@ public class OrchardMission extends GenericMission {
 
     private final Parameters parameters;
 
-    public OrchardMission(Parameters par) {
+    public SharperMission(Parameters par) {
         parameters = par;
 
         waypointV2List = new ArrayList<>();
@@ -87,8 +87,8 @@ public class OrchardMission extends GenericMission {
 
         for (LatLng point : waypointsCoordinates) {
             WaypointV2 wp = Objects.requireNonNull(new WaypointV2.Builder()
-                    .setAltitude(parameters.getDroneAltitude())
-                    .setCoordinate(new LocationCoordinate2D(point.latitude, point.longitude)))
+                            .setAltitude(parameters.getDroneAltitude())
+                            .setCoordinate(new LocationCoordinate2D(point.latitude, point.longitude)))
                     .setFlightPathMode(WaypointV2MissionTypes.WaypointV2FlightPathMode.GOTO_POINT_STRAIGHT_LINE_AND_STOP)
                     .setHeadingMode(WaypointV2MissionTypes.WaypointV2HeadingMode.AUTO)
                     .build();
