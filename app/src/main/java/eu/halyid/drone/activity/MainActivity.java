@@ -322,7 +322,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initMapView() {
-        gMap.moveCamera(CameraUpdateFactory.zoomTo(18));
+        gMap.moveCamera(CameraUpdateFactory.zoomTo(19));
         gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
         updateDroneLocation();

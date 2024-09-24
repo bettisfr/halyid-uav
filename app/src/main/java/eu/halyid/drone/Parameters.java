@@ -13,9 +13,8 @@ public class Parameters {
     private List<LatLng> waypoints;
     private float groundDistance;
     private int droneYaw;
-
     private int rows;
-
+    private List<Integer> gimbalYaws;
     public int getDroneYaw() {
         return droneYaw;
     }
@@ -73,5 +72,13 @@ public class Parameters {
 
     public void setRows(int rows) {
         this.rows = rows;
+    }
+
+    public List<Integer> getGimbalYaws() {
+        return gimbalYaws;
+    }
+
+    public void setGimbalYaws(List<Integer> gimbalYaws) {
+        this.gimbalYaws = gimbalYaws;
     }
 }
