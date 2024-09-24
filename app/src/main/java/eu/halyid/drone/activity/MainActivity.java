@@ -143,7 +143,9 @@ import dji.waypointv2.common.waypointv2.WaypointMission;
 import eu.halyid.drone.OrchardMission;
 import eu.halyid.drone.Parameters;
 import eu.halyid.drone.R;
+import eu.halyid.drone.SharperMission;
 import eu.halyid.drone.util.DJIProcedures;
+import eu.halyid.drone.util.GenericMission;
 import eu.halyid.drone.util.ModuleVerificationUtil;
 import eu.halyid.drone.util.ToastUtils;
 import eu.halyid.drone.util.VideoFeedView;
@@ -201,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private double mAircraftLng = 0;
     private float droneHeading;
     private float droneHeight;
-    private OrchardMission mission = null;
+    private GenericMission mission = null;
     private WaypointV2MissionOperator waypointV2MissionOperator = null;
     private WaypointV2MissionOperatorListener waypointV2MissionOperatorListener;
     private WaypointV2ActionListener waypointV2ActionListener = null;
@@ -320,7 +322,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initMapView() {
-        gMap.moveCamera(CameraUpdateFactory.zoomTo(18));
+        gMap.moveCamera(CameraUpdateFactory.zoomTo(19));
         gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
         updateDroneLocation();
@@ -371,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void connectToRTK() {
-        boolean simulator = false;
+        boolean simulator = true;
         configRTK(!simulator);
     }
 
@@ -980,7 +982,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private WaypointV2Mission createWaypointMission(Parameters parameters) {
-        mission = new OrchardMission(parameters);
+//        mission = new OrchardMission(parameters);
+        mission = new SharperMission(parameters);
         WaypointV2Mission v2m = mission.createWaypointMission();
 
         totalWaypoints = mission.getWaypointV2List().size();

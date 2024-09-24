@@ -35,48 +35,19 @@ import dji.common.mission.waypointv2.WaypointV2MissionTypes;
 import dji.common.model.LocationCoordinate2D;
 import eu.halyid.drone.util.GenericMission;
 
-public class OrchardMission extends GenericMission {
+public class SharperMission extends GenericMission {
 
     private final List<WaypointV2> waypointV2List;
     private final List<WaypointV2Action> waypointV2ActionList;
-
     private List<LatLng> waypointsCoordinates;
-
     private final Parameters parameters;
 
-    public OrchardMission(Parameters par) {
+    public SharperMission(Parameters par) {
         parameters = par;
 
         waypointV2List = new ArrayList<>();
         waypointV2ActionList = new ArrayList<>();
     }
-
-//    public void createWaypointsCoordinates() {
-//        waypointsCoordinates = new ArrayList<>();
-//
-//        waypointsCoordinates = parameters.getEndpoints();
-//
-//
-//
-//        for (int i = 0; i < parameters.getEndpoints().size()-1; i+=2) {
-//            LatLng wpBegin = parameters.getEndpoints().get(i);
-//            LatLng wpEnd = parameters.getEndpoints().get(i+1);
-//
-//            double distance = getDistanceBetweenTwoPoints(wpBegin, wpEnd);
-////            int steps = (int) (missionDistance / parameters.getWpDistance()) + 1;
-//
-//            double azimuth = getAngleBetweenTwoPoints(wpBegin, wpEnd);
-//
-////            for (int j = 0; j < steps; j++) {
-//            waypointsCoordinates.add(getDestinationLatLong(wpBegin, azimuth, 0));
-//            waypointsCoordinates.add(getDestinationLatLong(wpBegin, azimuth, distance/2.0));
-//            waypointsCoordinates.add(getDestinationLatLong(wpBegin, azimuth, distance));
-////            }
-//
-////            // Last waypoint
-////            waypointsCoordinates.add(wpEnd);
-//        }
-//    }
 
     public List<WaypointV2> getWaypointV2List() {
         return waypointV2List;
@@ -87,8 +58,8 @@ public class OrchardMission extends GenericMission {
 
         for (LatLng point : waypointsCoordinates) {
             WaypointV2 wp = Objects.requireNonNull(new WaypointV2.Builder()
-                    .setAltitude(parameters.getDroneAltitude())
-                    .setCoordinate(new LocationCoordinate2D(point.latitude, point.longitude)))
+                            .setAltitude(parameters.getDroneAltitude())
+                            .setCoordinate(new LocationCoordinate2D(point.latitude, point.longitude)))
                     .setFlightPathMode(WaypointV2MissionTypes.WaypointV2FlightPathMode.GOTO_POINT_STRAIGHT_LINE_AND_STOP)
                     .setHeadingMode(WaypointV2MissionTypes.WaypointV2HeadingMode.AUTO)
                     .build();
@@ -155,23 +126,6 @@ public class OrchardMission extends GenericMission {
     public List<WaypointV2Action> createWaypointAction() {
         int actionId = 0;
 
-        // Calculate bearing on a straight line (first and second point)
-        // This is an approximation way in order to compute the -90/90 angle for the drone (in this case, always either -90 or 90)
-        // We assume that at least two points are along a row (i.e., the first (0) and the second (1) indices)
-        LatLng point1 = waypointsCoordinates.get(0);
-        LatLng point2 = waypointsCoordinates.get(1);
-
-        float bearingAngle = (float) getAngleTwoPoints(point1, point2);
-        int droneYaw = parameters.getDroneYaw();
-        // Adjusted yaw angle
-        float adjustedDroneYaw = bearingAngle + droneYaw;
-        if (adjustedDroneYaw > 180) {
-            adjustedDroneYaw = adjustedDroneYaw - 360;
-        }
-        if (adjustedDroneYaw < -180) {
-            adjustedDroneYaw = adjustedDroneYaw + 360;
-        }
-
         for (int startIndex = 0; startIndex < waypointsCoordinates.size(); startIndex++) {
             // Do this once reached the waypoint
             WaypointTrigger waypointAction0Trigger = new WaypointTrigger.Builder()
@@ -229,37 +183,28 @@ public class OrchardMission extends GenericMission {
             waypointV2ActionList.add(waypointActionStop);
 
             // Generating matrix
-            int[] gimbalYaws = new int[5];
-            int[] gimbalPitches = new int[4];
-            float[][] distances = new float[5][4];
-            int[][] cameraFocals = new int[5][4];
-
-//            float q_min = 0.7f;
-            float q_max = 3.0f;
+            int[] gimbalYaws = new int[2];
+            int[] gimbalPitches = new int[1];
+            float[][] distances = new float[2][1];
+            int[][] cameraFocals = new int[2][1];
 
             float box_w = 1.15f;
             float box_h = 0.77f;
 
             // Yaws
-            for (int i = 2; i < gimbalYaws.length; i++) {
-                gimbalYaws[i] = (int) Math.toDegrees(Math.atan(((i-2)*box_w)/parameters.getGroundDistance()));
-                gimbalYaws[gimbalYaws.length-1-i] = -gimbalYaws[i];
-            }
+//            gimbalYaws[0] = (int) -Math.toDegrees(Math.atan(box_w/parameters.getGroundDistance()));
+//            gimbalYaws[1] = -gimbalYaws[0];
+
+            gimbalYaws[0] = parameters.getGimbalYaws().get(0);
+            gimbalYaws[1] = parameters.getGimbalYaws().get(1);
 
             // Pitches
-            for (int j = 0; j < gimbalPitches.length; j++) {
-                gimbalPitches[j] = (int) -Math.toDegrees(Math.atan((parameters.getDroneAltitude()-(q_max-(j*box_h)))/parameters.getGroundDistance()));
-            }
+            gimbalPitches[0] = 0;
 
-            // Yaws from index 2 (indices 0 and 1 are specular with 4 and 3, resp.)
-            for (int i = 2; i < gimbalYaws.length; i++) {
-                for (int j = 0; j < gimbalPitches.length; j++) {
-                    float relative_h = parameters.getDroneAltitude()-(q_max-(j*box_h));
-                    float relative_d = (float) Math.sqrt(Math.pow(parameters.getGroundDistance(), 2) + Math.pow((i-2)*box_w, 2));
-                    distances[i][j] = (float) Math.sqrt(Math.pow(relative_d, 2) + Math.pow(relative_h, 2));
-                    distances[gimbalYaws.length-1-i][j] = distances[i][j];
-                }
-            }
+            // Yaws
+            float relative_d = (float) Math.sqrt(Math.pow(parameters.getGroundDistance(), 2) + Math.pow(box_w, 2));
+            distances[0][0] = relative_d;
+            distances[1][0] = relative_d;
 
             // Focals
             for (int i = 0; i < gimbalYaws.length; i++) {
@@ -280,33 +225,32 @@ public class OrchardMission extends GenericMission {
                     int gimbalPitch = gimbalPitches[j];
                     int cameraFocal = cameraFocals[i][j];
 
-                    // Rotate the drone (yaw)
-                    WaypointTrigger waypointActionRotateDroneTrigger = new WaypointTrigger.Builder()
-                            .setTriggerType(ActionTypes.ActionTriggerType.ASSOCIATE)
-                            .setAssociateParam(new WaypointV2AssociateTriggerParam.Builder()
-                                    .setAssociateActionID(actionId - 1)
-                                    .setAssociateType(ActionTypes.AssociatedTimingType.AFTER_FINISHED)
-                                    .setWaitingTime(0)
-                                    .build())
-                            .build();
-
-                    WaypointActuator waypointActionRotateDroneActuator = new WaypointActuator.Builder()
-                            .setActuatorType(ActionTypes.ActionActuatorType.AIRCRAFT_CONTROL)
-                            .setAircraftControlActuatorParam(new WaypointAircraftControlParam.Builder()
-                                    .setAircraftControlType(ActionTypes.AircraftControlType.ROTATE_YAW)
-                                    .setRotateYawParam(new WaypointAircraftControlRotateYawParam.Builder()
-                                            .setYawAngle(adjustedDroneYaw)
-                                            .build())
-                                    .build())
-                            .build();
-
-                    WaypointV2Action waypointActionRotateDrone = new WaypointV2Action.Builder()
-                            .setActionID(actionId++)
-                            .setTrigger(waypointActionRotateDroneTrigger)
-                            .setActuator(waypointActionRotateDroneActuator)
-                            .build();
-                    waypointV2ActionList.add(waypointActionRotateDrone);
-
+//                    // Rotate the drone (yaw)
+//                    WaypointTrigger waypointActionRotateDroneTrigger = new WaypointTrigger.Builder()
+//                            .setTriggerType(ActionTypes.ActionTriggerType.ASSOCIATE)
+//                            .setAssociateParam(new WaypointV2AssociateTriggerParam.Builder()
+//                                    .setAssociateActionID(actionId - 1)
+//                                    .setAssociateType(ActionTypes.AssociatedTimingType.AFTER_FINISHED)
+//                                    .setWaitingTime(0)
+//                                    .build())
+//                            .build();
+//
+//                    WaypointActuator waypointActionRotateDroneActuator = new WaypointActuator.Builder()
+//                            .setActuatorType(ActionTypes.ActionActuatorType.AIRCRAFT_CONTROL)
+//                            .setAircraftControlActuatorParam(new WaypointAircraftControlParam.Builder()
+//                                    .setAircraftControlType(ActionTypes.AircraftControlType.ROTATE_YAW)
+//                                    .setRotateYawParam(new WaypointAircraftControlRotateYawParam.Builder()
+//                                            .setYawAngle(0)
+//                                            .build())
+//                                    .build())
+//                            .build();
+//
+//                    WaypointV2Action waypointActionRotateDrone = new WaypointV2Action.Builder()
+//                            .setActionID(actionId++)
+//                            .setTrigger(waypointActionRotateDroneTrigger)
+//                            .setActuator(waypointActionRotateDroneActuator)
+//                            .build();
+//                    waypointV2ActionList.add(waypointActionRotateDrone);
 
                     // Rotate the gimbal (pitch+yaw)
                     WaypointTrigger waypointActionTmpTrigger = new WaypointTrigger.Builder()
@@ -318,14 +262,6 @@ public class OrchardMission extends GenericMission {
                                     .build())
                             .build();
 
-                    float adjustedGimbalYaw = adjustedDroneYaw + gimbalYaw;
-                    if (adjustedGimbalYaw > 180) {
-                        adjustedGimbalYaw = adjustedGimbalYaw - 360;
-                    }
-                    if (adjustedGimbalYaw < -180) {
-                        adjustedGimbalYaw = adjustedGimbalYaw + 360;
-                    }
-
                     WaypointActuator waypointActionTmpActuator = new WaypointActuator.Builder()
                             .setActuatorType(ActionTypes.ActionActuatorType.GIMBAL)
                             .setGimbalActuatorParam(new WaypointGimbalActuatorParam.Builder()
@@ -333,7 +269,7 @@ public class OrchardMission extends GenericMission {
                                     .rotation(new Rotation.Builder()
                                             .mode(RotationMode.ABSOLUTE_ANGLE)
                                             .pitch(gimbalPitch)
-                                            .yaw(adjustedGimbalYaw)
+                                            .yaw(gimbalYaw)
                                             .time(1)
                                             .build())
                                     .build())
