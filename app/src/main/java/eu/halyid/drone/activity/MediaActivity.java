@@ -308,10 +308,8 @@ public class MediaActivity extends AppCompatActivity implements View.OnClickList
                             totalBugDetected++;
 
                             // access the elements of the individual JSONObjects
-                            float x_min = Float.parseFloat(jsonObject.getString("xmin"));
-                            float y_min = Float.parseFloat(jsonObject.getString("ymin"));
-                            float x_max = Float.parseFloat(jsonObject.getString("xmax"));
-                            float y_max = Float.parseFloat(jsonObject.getString("ymax"));
+                            float width = Float.parseFloat(jsonObject.getString("width"));
+                            float height = Float.parseFloat(jsonObject.getString("height"));
                             float confidence = Float.parseFloat(jsonObject.getString("confidence"));
 //                            String objClass = jsonObject.getString("class");
 
@@ -323,9 +321,7 @@ public class MediaActivity extends AppCompatActivity implements View.OnClickList
                                 highConfidence++;
                             }
 
-                            float diff_x = x_max - x_min;
-                            float diff_y = y_max - y_min;
-                            if (diff_x <= 100 && diff_y <= 100) {
+                            if (width <= 100 && height <= 100) {
                                 smallBoxes++;
                             } else {
                                 largeBoxes++;
